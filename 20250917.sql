@@ -1,0 +1,32 @@
+# SELECT * FROM users u RIGHT JOIN orders o ON o.user_id = u.id ORDER BY u.id;
+# SELECT * FROM users u CROSS JOIN orders o ORDER BY u.id;
+# SELECT u.user_id, u.username, u.city, u.country, s.last_name, s.first_name FROM user u INNER JOIN staff s ON u.id = s.user_id ORDER BY u.id;
+# SELECT s.id, s.last_name, o.id, o.order_date FROM staff s LEFT JOIN orders o ON s.id = o.staff_id WHERE s.id IN (3, 5) ORDER BY s.id;
+# SELECT country, COUNT(DISTINCT o.id) AS orderCnt FROM users u INNER JOIN orders o ON u.id = o.user_id GROUP BY country ORDER BY orderCNT DESC;
+# SELECT o.user_id, ROUND(SUM(p.price * p.quantity)) AS sumPrice, ROUND(SUM(p.discount_price * p.quantity)) AS sumDiscountPrice FROM orders o LEFT JOIN orderdetails od ON o.id = od.order_id INNER JOIN products p ON od.product_id = p.id GROUP BY o.user_id ORDER BY sumPrice DESC;
+# (SELECT * FROM users) UNION (SELECT * FROM users);
+# (SELECT * FROM users) UNION ALL (SELECT * FROM users) ORDER BY id;
+# (SELECT * FROM users) UNION ALL (SELECT id, phone, country, city FROM users);
+# (SELECT id, phone, country, city FROM users WHERE country = 'Korea') UNION ALL (SELECT id, phone, country, city FROM users WHERE country = 'Mexico') ORDER BY country;
+# (SELECT * FROM orders WHERE SUBSTR(order_date,1,7) = '2015-10') UNION ALL (SELECT * FROM orders WHERE SUBSTR(order_date,1,7) = '2015-12');
+# (SELECT id, phone, country, city FROM users WHERE country = 'USA' AND is_marketing_agree = 1) UNION ALL (SELECT id, phone, country, city FROM users WHERE country = 'France' AND is_marketing_agree = 0) ORDER BY country;
+# (SELECT * FROM orderdetails od LEFT JOIN products p ON od.product_id = p.id ) UNION (SELECT * FROM products p RIGHT JOIN orderdetails od ON p.id = od.product_id);
+# SELECT name, price, (SELECT ROUND(AVG(price),2) FROM products) AS avgProduct FROM products;
+# SELECT * FROM products;
+# SELECT ROUND(AVG(price),2) FROM products;
+# SELECT name, price, 100.00 AS faekPrice FROM products;
+# SELECT name, price, AVG(price) AS AvgPrice FROM products ORDER BY name DESC;
+# SELECT name, price, (SELECT ROUND(AVG(price),2) FROM products) AS avgProduct, (SELECT ROUND(AVG(discount_price), 2) FROM products) AS avgDiscountPirce FROM products;
+# SELECT city, COUNT(DISTINCT id) AS pop FROM users GROUP BY city HAVING pop >= 3 ORDER BY pop DESC;
+# SELECT * FROM (SELECT city, COUNT(DISTINCT id) AS pop FROM users GROUP BY city) temp WHERE pop >= 3 ORDER BY pop DESC;
+# SELECT s.id, s.last_name, s.first_name, s.birth_date, o.id, o.order_date FROM orders o LEFT JOIN staff s ON o.staff_id = s.id WHERE s.last_name	IN ('kyle', 'Scott') ORDER BY s.last_name;
+# SELECT * FROM orders WHERE staff_id IN(SELECT id FROM staff WHERE last_name IN('Kyle', 'Scott'));
+# SELECT * FROM products WHERE discount_price = (SELECT MAX(discount_price) FROM products);
+# SELECT * FROM (SELECT * FROM orders WHERE SUBSTR(order_date, 1, 7) = '2015-07') o INNER JOIN (SELECT * FROM orderdetails WHERE quantity >= 50) od ON o.id = od.order_id
+SELECT *, ROUND(discount_price/ (SELECT MAX(discount_price) FROM products), 3) AS ratioPerMaxPrc FROM products;
+SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM users u INNER JOIN staff s ON u.id = s.user_id WHERE country IN ('Korea', 'Italy') AND birth_date < '1990-01-01';
+SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM (SELECT * FROM users WHERE country IN ('Korea', 'Italy')) u INNER JOIN (SELECT * FROM staff WHERE birth_date < '1990-01-01') s ON u.id = s.user_id;
+SELECT * FROM (SELECT country, COUNT(DISTINCT id) AS userCnt FROM users GROUP BY country) temp WHERE userCnt >= 5 ORDER BY userCnt DESC;
+SELECT * FROM products WHERE price = (SELECT MIN(price) FROM products);
+SELECT * FROM users WHERE id IN(SELECT user_id FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016');
+SELECT DISTINCT u.* FROM (SELECT * FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016') o INNER JOIN (SELECT * FROM users) u ON o.user_id = u.id
