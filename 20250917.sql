@@ -23,10 +23,10 @@
 # SELECT * FROM orders WHERE staff_id IN(SELECT id FROM staff WHERE last_name IN('Kyle', 'Scott'));
 # SELECT * FROM products WHERE discount_price = (SELECT MAX(discount_price) FROM products);
 # SELECT * FROM (SELECT * FROM orders WHERE SUBSTR(order_date, 1, 7) = '2015-07') o INNER JOIN (SELECT * FROM orderdetails WHERE quantity >= 50) od ON o.id = od.order_id
-SELECT *, ROUND(discount_price/ (SELECT MAX(discount_price) FROM products), 3) AS ratioPerMaxPrc FROM products;
-SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM users u INNER JOIN staff s ON u.id = s.user_id WHERE country IN ('Korea', 'Italy') AND birth_date < '1990-01-01';
-SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM (SELECT * FROM users WHERE country IN ('Korea', 'Italy')) u INNER JOIN (SELECT * FROM staff WHERE birth_date < '1990-01-01') s ON u.id = s.user_id;
-SELECT * FROM (SELECT country, COUNT(DISTINCT id) AS userCnt FROM users GROUP BY country) temp WHERE userCnt >= 5 ORDER BY userCnt DESC;
-SELECT * FROM products WHERE price = (SELECT MIN(price) FROM products);
-SELECT * FROM users WHERE id IN(SELECT user_id FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016');
-SELECT DISTINCT u.* FROM (SELECT * FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016') o INNER JOIN (SELECT * FROM users) u ON o.user_id = u.id
+# SELECT *, ROUND(discount_price/ (SELECT MAX(discount_price) FROM products), 3) AS ratioPerMaxPrc FROM products;
+# SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM users u INNER JOIN staff s ON u.id = s.user_id WHERE country IN ('Korea', 'Italy') AND birth_date < '1990-01-01';
+# SELECT u.id, u.phone, u.country, s.id, s.last_name, s.first_name FROM (SELECT * FROM users WHERE country IN ('Korea', 'Italy')) u INNER JOIN (SELECT * FROM staff WHERE birth_date < '1990-01-01') s ON u.id = s.user_id;
+# SELECT * FROM (SELECT country, COUNT(DISTINCT id) AS userCnt FROM users GROUP BY country) temp WHERE userCnt >= 5 ORDER BY userCnt DESC;
+# SELECT * FROM products WHERE price = (SELECT MIN(price) FROM products);
+# SELECT * FROM users WHERE id IN(SELECT user_id FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016');
+# SELECT DISTINCT u.* FROM (SELECT * FROM orders WHERE SUBSTR(order_date, 1, 4) = '2016') o INNER JOIN (SELECT * FROM users) u ON o.user_id = u.id
